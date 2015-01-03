@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- Archivo de libros del 10 de Marzo de 2014-->
+
+<!--Ejemplo de Processing Intruction
+<?xml-stylesheet type="text/css" href="estilos.css" ?>
+-->
+<_libros>  <!-- etiqueta de apertura -->
+	<mi.libro paginas="600">
+		<nombre>El <![CDATA[<b>Quijote</b>de la <i>Mancha</i>]]></nombre> 
+		<autor>Miguel de Cervantes &lt;Savedra&gt;</autor> <!-- valores -->
+		<editorial>Una muy vieja</editorial>
+	</mi.libro>
+	<mi_libro paginas="500"> <!-- atributos -->
+		<nombre>Cien años de soledad</nombre> 
+		<autor>Gabriel Garcia Marquez</autor>
+		<editorial>Obeja negra</editorial>
+	</mi_libro>
+</_libros>  <!-- etiqueta de cierre -->
+ 

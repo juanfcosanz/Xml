@@ -1,0 +1,47 @@
+
+libros{
+	display: block;
+}
+
+libro{
+	display: block;
+	background: yellow;
+	border: 2px black solid;
+	margin: 10px;
+	width: 600px;
+}
+
+nombre{
+	display: block;
+	color: red;
+	font-size: 30px;
+}
+
+nombre:after{
+	content: ", " attr(paginas) "páginas";
+	font-size: 20px;
+	color: orange;
+}
+
+autor, editorial{
+	display: block;
+	color: green;
+	margin: 5px;
+	font-weight: bold;
+}
+
+autor{
+	text-decoration: underline;
+}
+
+autor:before{
+	content: "Autor: ";
+}
+
+editorial{
+	font-style: oblique;
+}
+
+editorial:before{
+	content: "Editorial: ";
+}

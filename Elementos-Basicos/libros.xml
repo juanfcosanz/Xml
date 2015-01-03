@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<?xml-stylesheet type="text/css" href="css/libros.css"?>
+
+<libros>  
+	<libro>
+		<nombre paginas="600">El Quijote de la Mancha</nombre>
+		<autor>Miguel de Cervantes Savedra</autor>
+		<editorial>Una muy vieja</editorial>
+	</libro>
+	<libro> 
+		<nombre paginas="400">Cien años de soledad</nombre> 
+		<autor>Gabriel Garcia Marquez</autor>
+		<editorial>Obeja negra</editorial>
+	</libro>
+	<libro> 
+		<nombre paginas="200">La guerra del fin del mundo</nombre> 
+		<autor>Mario Vergas Llosa</autor>
+		<editorial>El barco de vapor</editorial>
+	</libro>
+</libros>  
+ 
