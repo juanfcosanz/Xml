@@ -1,0 +1,94 @@
+Introduccion al DOM
+	
+	-El Dom significa "Document Object Model" ó Modelo de Documentos tipo objetos.
+	-Fue creado en 1998 por la W3C cmo estandar.
+	-Proovee una forma de manipular, crear, cambiar y borrar contenido de un docuemento por medio de un script o de forma programatica.
+
+	-El DOM es independiente de la plataforma(no importa el navegador, el lenguaje de programacion, SO).
+	-Representa un documento como un arbol y permite acceder a las estructuras del mismo.
+
+	-El modelo DOM de Xml, todo es un NODO del arbol:
+		*elementos
+		*instrucciones de proceso
+		*CDATA
+		*Comentarios
+		*Textos o Contenidos
+
+	-A cualquier parte del arbol, se le considera un nodo.
+	-La relacion entre nodos es de padre a hijo.
+
+	-En DOM se utiliza en forma frecuente los siguientes terminos para referenciar objetos:
+		* child (hijo)
+		* sibling (hermano)
+		* parent (padre)
+		* ancestor (ancestro)
+		* descendent (decendiente)
+
+Padres, hijos y hermanos
+
+	-Los nodos tíene una relacion jerárquica dentro del árbol.
+	-Los nodos padres tiene nodos hijos también llamados subnodos.
+	-Los nodos hijos del mismo padre son conocidos como hermanos(siblings)
+
+	-El nodo principal=raiz/root
+	-Cada nodo exepto el raiz, tiene un nodo padre (parent)
+	-Un nodo puede tener cualquier cantidad de nodos hijos(child) o subnodos.
+	-Un nodo que no tiene hijo se llama "leaf".
+	-Los nodos que tienen el mismo padre se les considera hermanos(siblings)
+
+	-firstchild: termino utilizado para referirse al primero de los hijos(nodos) de izq-der.
+	-lastchild: se refiere al ultimo nodo.
+			
+			-> nextSibling: pasa al siguiente hermano(nodo), izq-der.
+			-> previusSibling: ir de der-izq.
+
+	-Gracias a que la estructura de un archivo XML se representa como un árbol, podemos recorrerlo sin saber su estructura exacta.
+
+	Como cargar un archivo XML a una pagina HTML?
+		//le decimos que vamos a leer por peticion "get" el archivo 
+		//libros.xml(ruta) con false para que no lo interprete
+		xhttp.open("GET", "libros.xml", false);
+		//para que envie la operación
+		xhttp.send();
+
+		//creamos un objeto xmlDoc para cargar un xml
+		xmlDoc = xhttp.responseXML;
+
+	Metodo y propiedades para analizar un archivo XML
+
+	PROPIEDADES:
+
+		- x.nodeName: nombre del nodo de x
+		- x.nodeValue: regresa en valor de un nodo de x
+		- x.parentNode: nos dice el nombre del padre de x
+		- x.childNodes: nos dice los hijos de x
+		- x.attributes: si tiene uno o mas atributos de x
+
+		*** Estas propiedades nos pueden regresar areglos si es mas de uno ***
+
+	METODOS:
+		- x.getElementsByTagName({nombre, titulo, autor): obtiene los elementos seleccionados.
+		- x.appendChild(nodo): inserta un subnodo(hijo) en x.
+		- x.removeChild(nodo): quita un nodo detro del elemento x.
+
+		libro = xmlDoc.getElementsByTagName("nombre")[0].childNodes[0].nodeValue
+
+
+	Tipos de datos
+		1 - nodo
+		2 - atributo de nodo
+		3 - texto
+		4 - CDATA
+		5 - Entiti reference node
+		6 - Entiti nodo
+		7 - processing instruccion node
+		8 - comentario
+		9 - documento de nodo
+		10 - document type node
+		11 - document frame node
+		12 - notacion node
+
+
+
+
+

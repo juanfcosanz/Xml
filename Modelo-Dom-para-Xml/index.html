@@ -1,0 +1,57 @@
+<!DOCTYPE>
+<html>
+<head>
+	<title>Libros</title>
+	<script type="text/javascript">
+
+		//Codigo para cargar un arhico xml
+
+		//Preguntamos si el browser soporta XMLHttpRequest que 
+		//nos permite cargar datos en el background
+		if(window.XMLHttpRequest){
+			xhttp = new XMLHttpRequest();
+			//alert("Navegador Moderno");
+		} else {
+			//IE 5-6
+			//creamos en obejto XMLHTTP pero con ActiveX
+			xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		
+		//le decimos que vamos a leer por peticion "get" el archivo 
+		//libros.xml(ruta) con false para que no lo interprete
+		xhttp.open("GET","libros.xml",false);
+		//para que envie la operación
+		xhttp.send();
+		//creamos un objeto xmlDoc para cargar un xml
+		xmlDoc = xhttp.responseXML;
+		
+		//recibimos el nombre del libro
+		// titulos = xmlDoc.getElementsByTagName("nombre");
+		// for (var i = 0; i < titulos.length; i++) {
+		// 	document.write(titulos[i].childNodes[0].nodeValue+"<br/>");
+		// }
+		
+		//trae todos los elementos que tenga nodos y de hay hijos
+		libros = xmlDoc.documentElement.childNodes;
+
+		for (var i = 0; i < libros.length; i++) {
+			if(libros[i].nodeType == 1){
+			// document.write(libros[i].nodeType+" , "+libros[i].nodeName+"<br/>");
+				libro = libros[i].childNodes;
+
+			document.write(libro[1].nodeName+": "+libro[1].childNodes[0].nodeValue);
+			p = libro[1].attributes.getNamedItem("paginas").nodeValue;
+			document.write(", "+p+" paginas"+"<br/>");
+			document.write(libro[3].nodeName+": "+libro[3].childNodes[0].nodeValue+"<br/>");
+			document.write(libro[5].nodeName+": "+libro[5].childNodes[0].nodeValue+"<br/>");
+
+			}
+			//document.write(libros[1].childNodes[0].nodeValue+"<br/>");
+
+		};
+	</script>
+</head>
+<body>
+
+</body>
+</html>
