@@ -1,0 +1,68 @@
+Los elementos de un archivo Xml
+	*Elemento o nodos: cada etiqueta que no sea la raiz se llama nodo o elementos.
+	*Atributos: ir entre comillas, no podemos utilizar caracteres especiales, no puede haber atributos vacios.
+	*Comentarios: igual que los de Html.
+	*Character Data section (CDATA) : cuadno nec colocar tags html dentro de los valores , necesita indicarle que omita el analisis de ese valor.
+	*Instrucciones de proceso: especie de comentarios, para que el analizador sintaxico no lo utilice y jecutan algun tipo de acccion.
+	*Entity References: caracteres que no tenemos en el teclado (marca registrado, monedas).
+
+La declaracion de XMl
+
+		<?xml version="1.0" encoding="UTF-8" ?>
+
+	-puede ser opcional
+	-encoding(opcional): es como se va a manejar los caracteres
+	-debe ser la primera linea del archivo
+	-version: hay dos 1.0 y 1.1
+	-standalone(opcional): tiene dos valores true y false, debe estar al final de la sintaxis, no muy usado
+
+Analizando los elemntos de un archivo Xml
+
+	* Elementos o nodos
+		-inician con un guion bajo o letra.
+		-se pueden utilizar letras, numeros, guiones, puntos para definirlos.
+		-no puede haber espacios.
+		-no se puede utilizar la cadena xml al nombrar un elemento, ya que es una palabra reservada del lenguaje.
+		-no se puede usar caracteres raros conocidos como no-funny-characters(caracteres propios del lenguaje ingles).
+
+	*Atributos
+		-un atributo sigue las mismas normas que un elemento o nodo para -su creacion(nombre).
+		-no puede haber atributos con con el mismo nombre de una etiqueta(repetir).
+
+	*Comentarios
+
+			<!-- esto es un comentario -->
+
+		-son carcateres que no toma en cuenta el compilador.
+		-son los mismos a los de HTML.
+		-no se pueden anidar los comentarios.
+		-no puede ir dentro de etiquetas.
+		-no debe ser la primera linea del documento.
+	
+	*Character data Section
+
+			<![CDATA[ contenido a saltar ]]>
+
+		-va a consistir en escribir codigo libre
+		-todo lo que este dentro dentro de las etiquetas, el analizador lo salta/analiza.
+		-podemos agregar contenido como html, acentos
+		-no podemos anidar CDATA dentro de otro CDATA
+
+	*Processing Intruction
+
+				<? target instruction ?>
+
+		-son instrucciones que solo le intersan a la aplicacion,por ejemplo php, asp, navegador, pero que no le interesa al analizador xml.
+		-no son comentarios.
+		-el nombre de target no puede ser XML y tiene las mismas reglas de nombre que los nodos y atributos.
+
+	*Caracteres especiales o Entities
+
+		-son caracteres especiales que no existen en el taclado, por ejemplo: marca registrada, euro.
+		-estos caracteres hay que definirlos en un archivo llamado dtd
+		-hay 5 caracteres especiales(entities) que podemos utilzar directamente en xml:
+			+ &amp;
+			+ &apos;
+			+ &it;
+			+ &gt;
+			+ &quot;
