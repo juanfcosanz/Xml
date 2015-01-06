@@ -1,0 +1,87 @@
+Xslt: Extensible Stylesheet Laguaje
+
+	-Esta tecnologia no solamente nos va a permitir darle estilo a nuestro contenido html, sino tambien nos va a permitir tranformarlo.
+
+	-XSLT significa Extensible Stylesheet Language Transform.
+	-es un alenguaje para darle estilo a los doc. Xml, al igual que el Css.
+	-XLST puede transformar un doc. Xml en un XHTML.
+
+	Xml: datos
+	Xstl: diseño/presentacion
+
+	-Xslt es la parte mas importante de xsl.
+	-Xstl utiliza Xpath para navegar en un doc. Xml
+	-xstl es una recomendacion de la W3c desde 1999.
+
+	-con XSLT podemos añadir y eliminar elementos y atributos en el documento de salida.
+	-tambien podemos ordenar y seleccionar elementos y atributos en el doc de salida, que no se puede hacer con css.
+
+	-el elemento raiz en una hoja de estilo XSL es <xsl:stylesheer> ó <xsl:tranform>.
+	-las dos etiquetas son completamnete sinónimos.
+
+Declaracion de Xslt:
+	
+	-la forma de declar un doc XSL es:
+
+	<xsl:stylesheet/transform version="1.0"
+	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+	-Para acceder a un elem., atributos y otras caract. debemos declarar el espacio de nombres(namespace), en la parte superior del doc.
+	-Una hoja de estilos XSL consiste en una o mas reglas que las llamamos formatos o "Templates".
+	-XSLT funciona en navegadores modernos.
+
+Como crear un archivo XSL
+
+	-Para crear templates utilizamos la etiqueta :
+			<xsl:template>
+
+	-Esta etiqueta utiliza un atributo que es math, que recibe un elemento de tipo Xpath
+
+			<xsl:template math="/">
+
+			la /: significa que es la raiz
+	-el archivo debe tener un identificador de tipo Xml y la extension xsl.
+	-el xsl generalmente lleva el mismo nombre que el XML.
+
+Recuperar informacin de un archivo XMl
+
+	-para extrer el valor de un nodo de un archivo Xml utilizamos la etiqueta:
+			<xsl:value-of>
+
+	-por ejemplo:rescatar el nombre del libro
+		<xsl:value-of select="libros/libro/nombre"/>
+		   esta es una expresion de tipo Xpath
+
+Recorriendo todos los nodos de un documento Xml
+	
+	-para hacer un cliclo que recorra al docuemnto XML 
+	necesitamos la etiqueta:
+			<xsl:for-each select="libros/libro">
+			especificamos el directoriom con una exp. Xpath
+
+Filtrando informacion en un XMl
+	
+	-Podemos filtrar la salida de informacion por medio de la exp. Xpath
+
+		Ejemplo: deseamos traer el libro con el autor Miguel de Cervantes
+
+			<xsl:for-each select="libros/libro[autor="Miguel de Cervante"]">
+
+	-Los operadores que podemos  utilizar para hacer una seleccion:
+
+			* = (igual)
+			* != (difrente)
+			* &gt; (mayor que)
+			* &lt; (menor que)
+	
+Ordenando informacion
+	
+	-Podemos ordenar una seleccion por medio de la etiqueta sort:
+			<xsl:sort select="autor"/>
+		dentro del select va el criterio de ordenacion
+
+Condicionales
+	-podemos hacer una condicion por medio de la siguiente etiqueta:
+
+		<xsl:if test="condicion"/>
+		</xsl:if>
