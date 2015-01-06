@@ -1,0 +1,127 @@
+Dtd: Deficion de tipo de documento
+	
+	-Establece la gramatica(saber si esta bien formado y las tags son las que deben de estar y no más) de un vocabulario de un doc XMl.
+	-Determina la estructura de un doc XML
+	-Un Dtd valída un doc XML.
+	-Es decir, nos va a mancar un error, ya sea por que las tags no estan en orden,no le ponemos titulo o hay una de mas, entre otras.
+
+	-Podemos hacer una Dtd de dos maneras:
+		 * Puede ser declarada dentro del mismo doc 
+		 * En un archivo externo(mas utilizada)
+
+	Y la vamos a llamr desde un DOCTYPE.
+
+	-una DTD nos va a decir el "tipo de declaracion de marcado"(tags):
+		* los tipos de elementos que se incluyen en el doc.
+		* los atributos que se permiten.
+		* las entidades que se permiten.
+		* Notaciones(simbolos, acentos, copyrigh) que se permiten para ser usadas con las entidades externas.
+		* orden 
+
+	-estos "tipo de declaracion de marcado" en su conjunto,forman la estructura logica y fisica de una clase de documento; a esta definición de le conoce como "tipo de documento".
+
+	-Esto es usable cuando vamos a compartir informacion con otro sistema, o varias personas.
+
+Dtd Interna y Externa
+
+	-La declaracion de un DTD, tanto si es externa o interna, se define en la declaracion de tipo de doc o DOCTYPE(html).
+
+	-Una declaracion a un DTd Externa es:
+
+		<!DOCTYPE elementoRAIZ SYSTEM ruta_archivoDTD >
+	
+	-Declaracion a un DTD interna:
+		<!DOCTYPE elementoRAIZ SYSTEM [declaracion interna] >
+
+	-La declaracion DTD interna debe se realizarse depues de la declaracion XMl y antes del elemento raiz del doc.
+
+		Por ejemplo:
+			<!DOCTYPE libros SYSTEM "libros.dtd">
+
+	-Las declaraciones internas prevalecen sobre la declaraciones externas(es decir, si hay la misma definicion en las dos tipos de DTd, prevalece la de la interna), en caso de llamarse igual.
+	-Los DTD definen la "gramatica" del documento.
+
+	-DTD es el primer formato que se invento, basado en SGML(lenguaje origen).
+
+Modelado de la Informacion
+	
+	-El modelado de la informacion es determinar la estructura del archivo de tal manera que almacene de manera correcta y eficiente la informacion del sistema; es decir determina la informacion que vamos a almacenar y como la vamos almacenar.
+	-Lo primero que se hace primero es esquema/definicion (DTD) y depues el XML.
+	-Para ello hay que determinar si la informacion la almacenamos en elementos y atributos.
+				* Un elemento representa un objeto de la informacion.
+				*Un atributo representa una propiedad o caracteristica de un elemento.
+
+	-En general, un atributo no debera representa una pieza de informacion que pudiera representar como un objeto.
+
+	-Las ventajas de los atributos pueden ser los siguientes:
+		* los atributos pueden limitarse frente a una lista predeterminada de valores enumerados(clasificacion).
+		* los atributos tienen valores predeterminados.
+		* los atributos tiene tipos de datos(limitados en DTD).
+		* los atributos son muy concisos(muchos datos alrrededor de el, cortos).
+		* los atributos son mas faciles de analizar sintacticamente que los elementos.
+
+	-Algunas desventajas de los atributos son las siguientes:
+		* los atributos no son convenientes para cadenas muy largas
+		* los atributos no pueden tener informacion anidada (ej. nombre completo).
+		* los valores en blanco no se pueden omitir.
+
+Los elementos de un Dtd
+	
+	-Los elemntos(nodos) se declaran en DTD de la siguiente forma:
+		<!ELEMENT nombre tipo >
+
+	-XML soporta cuatro tipos de elementos:
+		* Vacio: sin contenido (EMPTY)
+		* solo elementos: contiene elementos secundarios(subnodos)
+		* Mixto: contiene una cadena y subelemntos
+		* ANY: cualquier elemento permitido(procurar no usar).
+
+	-los elementos vacios no contiene informacion, solo atributos:
+			<!ELEMENT img EMPTY>  
+			<img src="foto.jog"></img>
+			<img src="foto.jpg"/>
+		* no tiene contenido y toda su inf. va a estar dentro de sus atributos 
+
+	-Estos elementos solo contienen subelemtos o subnodos:
+			<!ELEMENT nombre subelementos>
+			<!ELEMENT libros (nombre, autor+, editorial *,comentarios?, personaje?) >
+
+	-Los simbolos(comodines) que podemos utilizar para el modelado de elementos son:
+		| separa los elementos de un grupo. 
+		Sin simbolo, debe aparecer el elemento solo una vez.
+		? el elemento es opcional, puede apareer o no.
+		* el elemento puede aparecer cualquier numero de veces o niguna.
+		+ el elemento debe aparecer forzosamente al menos una vez, pero puede haber mas de uno.
+
+Los atributos en Dtd
+
+	-los atributos se declaran mediante la sigueinte sintaxis:
+		<!ATTLIST nombre_Elemento nombre_Atributo tipo_Atributo valor_Default>
+
+	-Los tipos de valor de un atributo pueden ser:
+		#REQUIRED: es obligatorio.
+		#IMPLIED: es opcional.
+		#FIXED: tiene un valor fijo.
+		default: valor prederminado.
+
+	-Se suele declara los atributos despues de su elemento, se puede ubicar en cualquier parte del doc.
+
+	-XMl soprta 10 tipos de atributos:
+		* CDATA
+		* Enumerados
+		* NOTATION
+		* ENTITY, ENTITITES
+		* ID, IDREF, IDREFS
+		* NMTOKEN y NMTOKENS
+
+	-Los atributos de cadena estan representado por CDATA:
+			<!ATTLIST nombre pag  CDATA #REQUIRED >
+			<!ATTLIST nombre anio CDATA #IMPLIED >
+
+	-Los atributos enumerados se tiene un conjunto limitado de valores:
+			<!ATTLIST nombre genero (terror|romance|historico|ci-fi) #REQUIRED >
+
+	-Los atributos ENTITY, ENTITIES, IDREF, IDREFS, NMTOKEN, NMTOKENS son procesados como simbolos.
+	-Un elemeno puede tener multiples atributos, por ejemplo:
+
+		<!ATTLIST líbro tipo (drama | aventura | suspenso | terror) "drama" clasificacion (1|2|3) "1" anio CDATA #IMPLIED)>

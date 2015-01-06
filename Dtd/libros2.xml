@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Ejemplo de DTD externo
+tipo de doc raiz-->
+<!DOCTYPE libros SYSTEM "dtd/libros.dtd">
+<libros>
+  <libro>
+    <nombre paginas="600">El Quijote de la Mancha</nombre>
+    <autor>Miguel de Cervantes Savedra</autor>
+    <editorial>Una muy vieja</editorial>
+    <precio>200.00</precio>
+    <fecha>2005</fecha>
+  </libro>
+  <libro>
+    <nombre paginas="400">Cien años de soledad</nombre>
+    <autor>Gabriel Garcia Marquez</autor>
+    <editorial>Obeja negra</editorial>
+    <precio>300.00</precio>
+    <fecha>2000</fecha>
+  </libro>
+  <libro>
+    <nombre paginas="200">La guerra del fin del mundo</nombre>
+    <autor>Mario Vergas Llosa</autor>
+    <editorial>El barco de vapor</editorial>
+    <precio>350.00</precio>
+    <fecha>2010</fecha>
+  </libro>
+</libros>
