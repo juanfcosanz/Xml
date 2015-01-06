@@ -1,0 +1,115 @@
+<!DOCTYPE>
+<html>
+<head>
+	<title>Xpath</title>
+	<script type="text/javascript">
+
+	//esta funcion se va a iniciar cuando el doc. html se termina de cargar
+	window.onload = function(){
+		
+		//variable para manejar en doc. xml
+		var x = cargaXML("libros.xml");
+		//variable para carga el doc. XML
+		var xml = x.responseXML;
+		//definimos el path
+		var path = "/libros/libro/nombre";
+		document.write("El path es: " +path+"<br/><br/>");
+
+		//Verificamos si es IE
+		if(window.XMLHttpRequest){
+
+			//evaluando el xml
+			//aki recibimos cada uno de los libros
+			var libros = xml.evaluate(
+							path,  
+							xml, // que es nuestro objeto
+							null, //no queremos namescapce 
+							XPathResult.ANY_TYPE, //no traiga la inormacion tal como esta
+							null); //el resultado no lo queremos en nigun otro objeto
+			
+			//iteratuando con el xml
+			var libro = libros.iterateNext();
+			while(libro){
+				document.write(libro.childNodes[0].nodeValue+"<br/>");
+				libro = libros.iterateNext();
+			}
+
+			//el arreglo empieza en 1
+			var path = "/libros/libro[1]/nombre";
+			var libros = xml.evaluate(path, xml, null,XPathResult.ANY_TYPE,null); 
+			var libro = libros.iterateNext();
+			document.write("<br/>Arreglo empezando en 1<br/>"+libro.childNodes[0].nodeValue+"<br/>");
+
+			//aplicando PREDICADOS
+			aplicandoPredicados(xml);
+
+			//APLICANDO CRITERIOS
+			aplicandoCriterios(xml);
+
+
+		}else{
+			//indicamos el lenguaje
+			xml.setProperty("SelectionLanguage","XPath");
+			//seleccionamos los libros
+			libros = xml.selectNodes(path);
+
+			for (var i = 0; i < libros.length; i++) {
+				document.write(libros[i].childNodes[0].nodeValue+"<br/>");
+			};
+
+		}
+	}
+
+	function cargaXML(archivo){
+		if(window.XMLHttpRequest){
+			xhttp = new XMLHttpRequest();
+		}else{
+			xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+		}
+		xhttp.open("GET",archivo,false);
+		try{xhttp.responseType = "msxml-document"}
+		catch(err){alert(err)}
+		xhttp.send();
+		return xhttp;
+	}
+
+	function aplicandoPredicados(xml){
+			var path = "/libros/libro/autor[text()]";
+			var libros = xml.evaluate(path, xml, null,XPathResult.ANY_TYPE,null); 
+			//iteratuando con el xml
+			var libro = libros.iterateNext();
+			document.write("<br/>");
+			document.write("<br/> Aplicando predicados: ");
+			document.write("<select>");
+			while(libro){
+				document.write("<option>");
+				document.write(libro.childNodes[0].nodeValue+"<br/>");
+				libro = libros.iterateNext();
+				document.write("</option>");
+			}
+			document.write("</select>");
+	}
+
+	function aplicandoCriterios(xml){
+			var path = "/libros/libro[fecha>2002]/autor";
+			var libros = xml.evaluate(path, xml, null,XPathResult.ANY_TYPE,null); 
+			//iteratuando con el xml
+			var libro = libros.iterateNext();
+			document.write("<br/>");
+			document.write("<br/> Aplicando criterios: ");
+			document.write("<select>");
+			while(libro){
+				document.write("<option>");
+				document.write(libro.childNodes[0].nodeValue+"<br/>");
+				libro = libros.iterateNext();
+				document.write("</option>");
+			}
+			document.write("</select>");	
+	}
+
+	</script>
+</head>
+<body>
+
+</body>
+</html>

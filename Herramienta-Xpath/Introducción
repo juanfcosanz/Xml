@@ -1,0 +1,92 @@
+Intoduccion a Xpath
+
+	-esta herramienta nos sirve para explorar y poder navegar en un doc. xml
+	-fue creado como estandar en 1999 por w3c
+	-en esencia, es parecida a las expresiones regulares es decir; es una serie de pasos a seguir para hacer una cadena y con ella poder navegar y explotar el doc. xml.
+	-xpath es utilizado en el estandar XSLT, el cual permite transformar el estilo del docuemtos xml.
+	-xpath es utilizado en otras tecnologias como Xquery y xpoint.
+	-el lenguaje Xpath contiene mas de 100 funciones, entre las que se encuentran funciones de cadena, numericas, fecha, etc.
+	-en xpath , existen siete tipos de nodos:
+			* Elementos(element) -> nodos
+			* Atributos (attribute) 
+			* Texto (text) -> valores de nodos
+			* Nombres de espacio (namespace)
+			* Intrucciones (Processing-instructions) -> leer xml, css, etc.
+			* Comenagtrios (comment)
+			* Nodos de docuemntos (document nodes)
+
+	- a los nodos que no tienes subnodos se les conoce como "atomicos"
+	-se les llama "items" a los nodos.
+	-se mantiene la misma relacion entre nodos que en Xml: padre, hijo, hermano, ancestro, descendiente.
+
+
+Xpath: seleccionar nodos
+	
+
+	expresiones                    Descripcion
+
+	nombre_nodo     seleccciona todos los nodos con ese nombre
+	/				selecciona la raiz
+	//				selecciona el nodo en el documento sin importar donde se encuentre
+	.				selecciona el nodo actual
+	.. 				selecciona el nodo padre
+	@				selecciona el atributo
+
+Xpath: selecciona nodos desconocidos 
+	
+	-si nosotros no tenemos en nombre del nodo, lo podemos hacer por medio de comodines:
+
+
+	expresiones                    Descripcion
+
+	*				selecciona cualquier nodo
+	@*				selecciona cualquier atributo
+	node()			selecciona cualquier nodo de cualquier tipo
+
+Xpath: ubicacion relativa o absoluta
+
+	-se la locacion(cadena) del Xpath inicia con una diagonal, es absoluta (apartir de la raiz).
+	-si la locacion del Xpath no inicia con diagonal, es relativa (la ubicacion va iniciar donde sea el nodo base).
+
+	-cada parte que forma el camino o "Path" esta formado por un eje o "axís", que es un nodo con relacion al "nodo actual" o "context node".
+	-nodo-prueba(nodo-test) identifica el nodo con el nodo actual(usar dos puntos).
+	-predicados(o ausencia de ellos), afina la seleccion con algun criterio de busqueda(menor, igual, mayor), un ejemplo es "text()".
+	-Tambien puede haber operadores en una expresion Xpath, como +, - , * / , etc.
+	-sus arreglos no empiezan en 0 , sino en 1.
+
+Evaluar nuestro archivo Xml(procesar nuestra cadena Xpath)
+
+	-para eso se utiliza un metodo llamado evaluate(), en IE no tienes el evaluate.
+
+	xml.evaluate():
+		con el metodo evaluate() podremos ejecutar(evaluar) cadenas de tipo Xpath y regresa un nodo o un conjunto de nodos.
+
+		sintaxis:
+
+				var r = xml.evaluate(
+								cadena_Xpath -> es una cadena o variable del mismo tipo, que contiene una expresion de tipo Xpath,
+								nodoContexto -> nodo a partir del cual vamos a evaluar la cadena Xpath, por lo general es document,
+								namespaceResolver -> nos da un namespace si es nec., funcion que pasa prefijos de los namespace que se nec en la exp. Xpath, si no nec namespace se escribe null  ,
+								tipoResultado -> formatear el resultado,por llo general se pone XPathResult.ANY_TYPE, 
+								resultado -> especifica un objeto de salida, sino usamos null  );
+
+Iteraccion con el resultado
+	
+	-para ello utilizamos la funcion iterateNext().
+
+	-dentro de un objeto Xpath, esta funcion pasara al siguiente valor.
+	-si ya no hay mas valores, regresara un null.
+
+				xml.iterateNext();
+
+
+Evaluar Xpath en IR
+	-para evaluar una expresion xpath en IE, nec las sentencias:
+
+		* xml.setProperty("SelectionLanguage","XPath"): para seleccionar el Xpath.
+
+		* nodes = xml.selectNodes(path): para la iteraccion usamos selectNodes que nos regresara un arreglo, iniciando en 0.
+
+	-podemos utilizar la evaluacion para determinar si el navegador es IE:
+
+			if(window.XMLHttpRequest){}else{es IE};
