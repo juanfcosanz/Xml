@@ -1,0 +1,390 @@
+XML Schema
+	
+	-XML Schema es otra forma de validar documentos XML, como el DTD.
+	-Este modelo es mas moderno y mas potente que el DTD, pero aun hay muchos doc. validados en el DTD.
+	
+	-XMl schema siempre es un formato externo con extension xsd.
+	-XML schema se adapta a las reglas del XML, soporta tipos de datos(mas potentes) y espacio de nombres o namespaces.
+
+	-La etiqueta o elemento <schema> es la raiz de un documeno XML Schema o xsd.
+
+				<?xml version="1.0"?> 
+
+				<xs:schema>
+				</xs:schema>
+
+	-La etiqueta <schem> puede contener algunos atributos:
+
+				<?xml version="1.0"?> 
+
+				<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+				indicamos el namespace del doc.
+				
+				</xs:schema>
+
+Hacer una referencia de un XMl a XSD
+	
+	<?xml version="1.0"?> 
+
+	<nodoRaiz
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance xsi:noNamespaceSchemaLocation="archivo.xsd">
+
+	</nodoRaiz>
+
+Elementos simples en XSD
+
+	-Un elemento simple en XSD solo puede contener texto
+	-No puede contener otros elementos ni atributos
+	-Se puede utilizar exp. regulares para validar el contenido de un elem. simple.
+	-Un elemento simple se define de la sig. manera:
+
+			<xs:element name="xxx" type"yyy"/>
+
+	-Los tipos mas comunes de datos son:
+			* xs:string
+			* xs:decimal
+			* xs:integer
+			* xs:boolean
+			* xs:date
+			* xs:time
+
+	-Ej. si tuvieramos los siguientes elementos:
+
+		<apellido>Lopez</apellido>
+		<edad>36</edad>
+		<fecha>1970-03-27</fecha>
+
+	-> estos elementos se llaman elementos simples, solo tienen texto y ningun atributo
+
+	-La forma de representarlos seria la siguiente:
+		
+		<xs:element name="apellido" type="xs:string"/>
+		<xs:element name="edad" type="xs:integer"/>
+		<xs:element name="fecha" type"xs:date"/>
+	
+	-Podemos tener un valor por omision, si es que no se contiene un valor:
+
+		<xs:element name="color" type="xs:string" default="verde"/>
+
+	-Un valor fijo es asignado automaticamente pero no se puede modificar:
+
+		<xs:element name="color" type="xs:string" fixed="verde" />
+
+Elementos complejos en XSD
+	
+	-Un elemento complejo, en XSD, es aquel que contiene otros elementos o atributos.
+
+	-Existen 4 tipos de elementos complejos:
+
+			* elementos vacios
+			* elementos que solo contiene otros elementos
+			* elementos que solo contieen texto
+			* elementos que contienen texto y otros elementos
+
+	-Los elementos anteriores tambien pueden contener atributos, en todos los casos.
+
+	-Si tuvieramos la siguiente estructura:
+
+			<autor>
+				<nombre>Gabriel</nombre>
+				<apellidos>Garcia Marquez<apellidos>
+			</autor>
+
+	-Lo podemos representar de la siguiente forma:
+
+		<xs:element name="autor">
+			<xs:complexType>    //decimos que es un elemento complejo
+				<xs:sequence>   //establecemos el orden preciso
+					<xs:element name="nombre" type="xs:string"/>
+					<xs:element name="apellidos" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+
+Elementos Vacios:
+	
+	-Podemos tener un elemento como el siguiente:
+				<img ancho="300"/>
+
+	-Su representacion en XSD podria ser:
+
+		<xs:element name="img">
+			<xs:complexType>   
+				<xs:complexContent>
+					<xs:restriction base="xs:integer">
+						<xs:attribute name="ancho" type="xs:positiveInteger"/>
+					</xs:restriction>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:element>
+
+Elementos que contienen otros elementos:
+	
+	-Un elemento como el siguiente:
+		<autor>
+			<nombres>John</nombres>
+			<apellidos>Smith</apellidos>
+		</autor>
+
+
+	-Su representacion en XSD podria ser:
+
+		<xs:element name="autor">
+			<xs:complexType>   
+				<xs:sequence>
+						<xs:attribute name="nombres" type="xs:string"/>
+						<xs:attribute name="apellidos" type="xs:string"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+
+Elementos complejos solo-texto:
+
+	-Un elemento complejo "solo texto" puede contener texto y atributos:
+		<titulo paginas="650">El quijote de la mancha</titulo>
+
+
+	-Su representacion en XSD podria ser:
+
+		<xs:element name="titulo">
+			<xs:complexType>   
+				<xs:simpleContent>
+					<xs:extension base="xs:string">
+						<xs:attribute name="paginas" type="xs:integer"/>
+					</xs:extension>
+				</xs:simpleContent>
+			</xs:complexType>
+		</xs:element>
+
+Elementos complejos mixtos -> menos recomendable de usar
+
+	-Un elemento "mixto" puede contener texto y otros elementos:
+		
+		<titulo>
+		El quijote de la mancha
+			<subtitulo>El ingenioso hidalgo, Don quijote de la mancha<subtitulo>
+		</titulo>
+
+	-Su representacion en XSD podria ser:
+
+		<xs:element name="titulo">
+			<xs:complexType mixed="true">   
+				<xs:sequence>
+					<xs:element name="subtitulo" type="xs:string"/>	
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+
+Indicadores
+	
+	-Van a restringuir y dar ciertos atributos a nuestros elementos.
+
+	-Existen 7 indicadores en XSD:
+			->indicadores de orden:
+				* All
+				* Choice
+				* Sequence
+			->indicadores de repeticion:
+				* maxOccurs   (numero minimo de ocurrencia, 0-1)
+				* mainOccurs (numero maximo de ocurrencia, 1)
+			->indicadoes de agrupacion:
+				* Group name
+				* attibuteGroup name
+
+	* Los indicadores de orden sirven para indicar el orden de los elementos.
+		
+		- <all> inidicamos que los elementos pueden aparecer en cualquier orden en caso de una seriazion
+
+		<xs:element name="autor">
+			<xs:complexType>   
+				<xs:all>
+					<xs:element name="nombres" type="xs:string"/>
+					<xs:element name="apellidos" type="xs:string"/>	
+				</xs:all>
+			</xs:complexType>
+		</xs:element>
+
+		-Si utilizamos el indicador <all> podemos utilizar los indicadores <minOccurs> de 0 a 1 y <maxOccurs> solo con valor de 1
+
+		-Con el indicador <choice> seleccionamos una opcion entre las opciones que se presentan.
+
+		<xs:element name="genero">
+			<xs:complexType>   
+				<xs:choice>
+					<xs:element name="masculino" type="xs:string"/>
+					<xs:element name="femenino" type="xs:string"/>	
+				</xs:choice>
+			</xs:complexType>
+		</xs:element>
+
+		-Con el indicapor <sequence> indicamos el orden en que deben de aparecer los elemenos.
+
+		<xs:element name="autor">
+			<xs:complexType>   
+				<xs:sequence>
+					<xs:element name="nombre" type="xs:string"/>
+					<xs:element name="apellidos" type="xs:string"/>	
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+
+	* Los indicadores de repeticion 
+
+		-con el indicador <maxOcxurs> indica el numero maximo de elementos del mismo tipo que se pueden presentar dentro de otro elemento(numero telefonico->solo acepta 10 caracteres, email->solo acepta 2 o 3).
+
+		<xs:element name="capitulos">
+			<xs:complexType>   
+				<xs:sequence>
+					<xs:element name="resumen" type="xs:integer"/>
+					<xs:element name="comentarios" type="xs:string" maxOccurs="10"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+
+		-Con el indicador <minOcxurs> indica el numero minimo de elementos del mismo tipo que se pueden presentar dentro de otro elemento.
+
+		<xs:element name="capitulos">
+			<xs:complexType>   
+				<xs:sequence>
+					<xs:element name="resumen" type="xs:integer"/>
+					<xs:element name="comentarios" type="xs:string" maxOcxurs="10" minOccurs="0"/>
+				</xs:sequence>
+			</xs:complexType>
+		</xs:element>
+
+	* Indicadoes de agrupacion
+
+		-Con los indicadores de grupo podemos relacionar varios elementos, incluso utilizando <all>,<choice> o <sequence>
+
+		<xs:group name="autor">
+			<xs:sequence>
+				<xs:element name="nombres" type="xs:string"/>
+				<xs:element name="apellidos" type="xs:string"/>
+				<xs:element name="fechaNacimiento"/>
+			</xs:sequence>
+		</xs:group>
+
+Definiendo un atributo en un archvio XSD
+
+	-Los atributos son escritos como tipos simples.
+	-Si un elemento contiene atributos se le considera un elemento complejo.
+	-Pero sus atributos son de tipo simples, no puede haber atributos.
+
+	-La sintaxos de un atributo es:
+
+			<xs:attribute name="xxx" type="yyy"/>
+
+	-Los tipos mas comunes para los atributos son:
+
+			* xs:string
+			* xs:decimal
+			* xs:integer
+			* xs:boolean
+			* xs:date
+			* xs:date
+
+	-Si se tiene un atributo como el siguiente:
+
+		<titulo idioma="EN">Tha Great Gasby</titulo<
+
+	-La definicion del atributo seria:
+
+		<xs:attribute name="idioma" type="xs:string"/>
+
+	-Tambien se puede tener valor por omision el los atributos:
+
+		<xs:attibute name="idioma" tye="xs:string" default="ES"/>
+
+	-Podemos definir valor fijo(todos y no se puede cambiar) en los atributos:
+
+		<xs:attibute name="idioma" type="xs:string" fixed="ES"/>
+
+	-Podemos definir un atributo como opcional o requerido con el atributo "use":
+
+		<xs:attribute name="idioma" type="xs:string" use="required"/>
+
+Restricciones o Facets
+	
+	-Las restricciones nos permiten validar los contenidos de elementos y atributos.
+	-En Xsd las restricciones se conocen cono Facets.
+
+	-Un ejemplo de facets es la siguiente:
+
+		-> Decimos que los valores de edad van desde 0 a 120
+
+		<xs:element name="edad">
+			<xs:simpleType>   
+				<xs:restriction base="xs:integer">
+					<xs:minInclusive value="0"/>
+					<xs:maxInclusive value="120"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+
+	-Podemos restringuir a una lista de valores:
+
+		<xs:element name="genero">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="Terror"/>
+					<xs:enumeration value="Suspenso"/>
+					<xs:enumeration value="Intriga"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+		
+	-Podemos restringuir a una lista de  caracteres valida:
+
+		<xs:element name="iniciales">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="[A-Z][A-Z][A-Z]"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+
+	-Podemos restringuir a 5 numeros:
+
+		<xs:element name="codigoPostal">
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:pattern value="[0-9][A0-9[0-9][0-9][0-9]"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+
+	-Si tenemos una lista corta de valores, podemos retringuir de la siguiente forma:
+
+		<xs:element name="sexo">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:pattern value="masculino|femenino"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+
+	-Podemos restringuir a que se mantengan o se eliminen los espacios en blanco:
+
+		<xs:element name="nombre">
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+				Decimos que no borre los espcios en blanco
+					<xs:whiteSpace value="preserve"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+
+	-Tambien podemos restringuir la longitud de los contenidos:
+
+		<xs:element name="claveAcceso">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:length value="10"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:element>
+
+
+
+
